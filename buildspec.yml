@@ -1,16 +1,19 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      nodejs: 10
   pre_build:
     commands:
       - $(aws ecr get-login --no-include-email --region us-east-1)
   build:
     commands:
       - docker build -t youtube:latest .
-      - docker tag <IMAGE_NAME> <ECR_URL>
+      - docker tag youtube:latest 398529876976.dkr.ecr.eu-central-1.amazonaws.com/14112020-youtube:latest
   post_build:
     commands:
-      - docker push <ECR_URL>
-      - printf '[{"name":<TASK_DEFINITION_NAME>,"imageUri":"%s"}]' <ECR_URL> > imagedefinitions.json
+      - docker push 398529876976.dkr.ecr.eu-central-1.amazonaws.com/14112020-youtube:latest
+      - printf '[{"name":"youtube14112020-service","imageUri":"%s"}]' 398529876976.dkr.ecr.eu-central-1.amazonaws.com/14112020-youtube:latest > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
