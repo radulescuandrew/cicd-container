@@ -9,3 +9,5 @@ docker tag <IMAGE_NAME> <ECR_URL>
 
 // push to ECR
 docker push <ECR_URL>
+
+
